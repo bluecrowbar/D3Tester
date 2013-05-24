@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<title>D3</title>
+	
+	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+	
+	<script type="text/javascript">
+		function showData(dataset, labels) {
+			var w = 300;
+			var h = 500;
+			var barPadding = 1;
+			
+			var svg = d3.select("body")
+				.append("svg")
+				.attr("width", w)
+				.attr("height", h);
+			
+			svg.selectAll("rect")
+				.data(dataset)
+				.enter()
+				.append("rect")
+				.attr("fill", "#23a9e0")
+				.attr("x", function(d, i) {
+					  return i * (w / dataset.length);
+					  })
+				.attr("y", h)
+				.transition().duration(500).ease("in")
+				.attr("y", function(d) {
+					  return h - d;
+					  })
+				.attr("width", w / dataset.length - barPadding)
+				.attr("height", function(d) {
+					  return d;
+					  });;
+			
+			svg.selectAll("text")
+				.data(dataset)
+				.enter()
+				.append("text")
+				.text(function(d, i) {
+					  return labels[i];
+					  })
+				.attr("x", function(d, i) {
+					  return i * (w / dataset.length) + (w / dataset.length - barPadding) / 2;
+					  })
+				.attr("y", function(d) {
+					  return h - d + 14;
+					  })
+				.attr("font-size", "11px")
+				.attr("fill", "white")
+				.attr("font-family", "sans-serif")
+				.attr("text-anchor", "middle");
+		}
+	</script>
+</head>
+<body>
+	
+</body>
+</html>
